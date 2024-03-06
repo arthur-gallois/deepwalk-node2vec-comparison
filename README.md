@@ -12,6 +12,7 @@ To setup the environment, install the requirements from `requirements.txt` using
 python -m venv env
 source env/bin/activate
 pip install -r requirements.txt
+pip install -e .
 ```
 
 ### Experiments

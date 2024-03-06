@@ -1,0 +1,9 @@
+[project]
+name = "node_embeddings"
+version = "0.1.0"
+description = "Implementation and Analysis of Node Embedding Approaches"
+
+
+[tool.setuptools]
+py-modules = ["node_embeddings"]
+

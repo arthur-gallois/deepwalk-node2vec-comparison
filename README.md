@@ -16,10 +16,16 @@ pip install -r requirements.txt
 
 ### Experiments
 
+Download the dataset with
+
+```bash
+sh download_blogcatalog.sh
+```
+
 To run the experiments, execute from the repository root
 
 ```bash
-python -m deepwalk.experiments.1_
+python -m node_embeddings.experiments.basic_run
 ```
 
 The output images will be written in a folder called `output` under the repository root.

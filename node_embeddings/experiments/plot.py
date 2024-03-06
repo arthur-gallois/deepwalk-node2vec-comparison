@@ -14,5 +14,5 @@ def save_figure(experiment_name, figure_name, format):
         dpi=1200
     )
 
-def create_directory(experiment_name):
-    Path(join(OUTPUT_FOLDER, experiment_name)).mkdir(parents=True, exist_ok=True)
+def create_directory(experiment_path):
+    Path(experiment_path).mkdir(parents=True, exist_ok=True)

@@ -11,7 +11,7 @@ def generate_batches(array, batch_size):
     for i in range(0, len(array), batch_size):
         yield array[i:i + batch_size]
 
-def deepWalk(graph, walks_per_vertex, walk_length, window_size, embedding_size, num_neg, lr, epochs, batch_size):
+def deepWalk(graph, walks_per_vertex, walk_length, window_size, embedding_size, num_neg, lr, epochs, batch_size, distribution=None):
     number_of_nodes = graph.number_of_nodes()
     
     embedding = (torch.randn(size=(number_of_nodes, embedding_size))).detach()
@@ -40,7 +40,8 @@ def deepWalk(graph, walks_per_vertex, walk_length, window_size, embedding_size, 
                 amount=num_neg*walks_per_vertex, 
                 length=walk_length, 
                 initial_nodes=n, 
-                number_of_nodes=number_of_nodes
+                number_of_nodes=number_of_nodes,
+                distribution=distribution
             )
             windows = generate_windows(negative_samples, window_size)
             batch_dotproduct = get_windows_dotproduct(windows, embedding)

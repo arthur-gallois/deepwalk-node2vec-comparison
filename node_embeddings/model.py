@@ -1,7 +1,7 @@
 from tqdm import tqdm
 import torch
+import numpy as np
 import random
-
 from node_embeddings.random_walk import generate_windows, gen_batch_random_walk, get_windows_dotproduct, gen_batch_negative_samples 
 
 eps = 1e-15
@@ -16,18 +16,18 @@ def deepWalk(graph, walks_per_vertex, walk_length, window_size, embedding_size, 
     
     embedding = (torch.randn(size=(number_of_nodes, embedding_size))).detach()
     embedding.requires_grad = True
-    optimizer = torch.optim.SGD([embedding], lr=lr)
+    optimizer = torch.optim.Adam([embedding], lr=lr)
     loss_history = {'pos': [], 'neg': [], 'total': []}
 
     for _ in range(epochs):
         nodes = torch.tensor(list(graph.nodes), dtype=int)
+        # random_ixs = torch.randperm(nodes.shape[0])
+        # nodes = nodes[random_ixs]
         random.shuffle(nodes)
         node_loader = generate_batches(nodes, batch_size)
         n_batches = int(number_of_nodes / batch_size)
         for n in tqdm(node_loader, total=n_batches):
             random_walk = gen_batch_random_walk(graph, n, walk_length, walks_per_vertex)
-            num_windows = walk_length + 1 - window_size
-
             # Positive Sampling
             # each row of windows is one window, we have B = walks_per_vertex*num_windows windows
             windows = generate_windows(random_walk, window_size)

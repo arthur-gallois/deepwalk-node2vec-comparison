@@ -2,8 +2,9 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from os.path import join
 from pathlib import Path
-
-sns.set()
+import numpy as np
+import torch
+import random
 
 OUTPUT_FOLDER = 'output'
 
@@ -14,5 +15,10 @@ def save_figure(experiment_name, figure_name, format):
         dpi=1200
     )
 
-def create_directory(experiment_path):
-    Path(experiment_path).mkdir(parents=True, exist_ok=True)
+def init(path, seed):
+    sns.set()
+    Path(path).mkdir(parents=True, exist_ok=True)
+    np.random.seed(seed)
+    torch.random.manual_seed(seed)
+    random.seed(seed)
+    torch.use_deterministic_algorithms(True)

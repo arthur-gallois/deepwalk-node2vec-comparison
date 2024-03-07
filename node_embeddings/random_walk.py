@@ -1,5 +1,5 @@
-import random
 import torch
+import numpy as np
 
 def gen_random_walk_tensor(graph, node, length, num_walks):
     walk = torch.zeros((num_walks, length), dtype=int)
@@ -10,7 +10,7 @@ def gen_random_walk_tensor(graph, node, length, num_walks):
         step = 1
         while step < length:
             neighbors = list(graph.neighbors(current_node))
-            current_node = random.choice(neighbors)
+            current_node = np.random.choice(neighbors)
             walk[j, step] = current_node
             step += 1
         j+=1

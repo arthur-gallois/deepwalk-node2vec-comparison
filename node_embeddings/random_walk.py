@@ -55,8 +55,13 @@ def gen_negative_samples(amount, length, initial_node, number_of_nodes):
     negative_samples[:, 1:] = torch.randint(number_of_nodes, (amount, length-1))
     return negative_samples
 
-def gen_batch_negative_samples(amount, length, initial_nodes, number_of_nodes):
+def gen_batch_negative_samples(amount, length, initial_nodes, number_of_nodes, distribution=None):
     negative_samples = torch.zeros((amount*initial_nodes.shape[0], length), dtype=int)
     negative_samples[:, 0] = initial_nodes.repeat(amount, 1).t().contiguous().view(-1)
-    negative_samples[:, 1:] = torch.randint(number_of_nodes, (amount*initial_nodes.shape[0], length-1))
+    if distribution is None:
+        negative_samples[:, 1:] = torch.randint(number_of_nodes, (amount*initial_nodes.shape[0], length-1))
+    else:
+        M = amount*initial_nodes.shape[0]
+        N = length-1
+        negative_samples[:, 1:] = torch.multinomial(distribution, M*N, replacement=True).view(M, N)
     return negative_samples

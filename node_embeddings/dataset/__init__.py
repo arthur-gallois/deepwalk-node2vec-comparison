@@ -1,0 +1,2 @@
+from node_embeddings.dataset.blogcatalog import BlogCatalogDataset
+from node_embeddings.dataset.ppi import PPIDataset

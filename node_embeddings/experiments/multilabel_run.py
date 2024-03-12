@@ -6,22 +6,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import f1_score
 from sklearn.linear_model import LogisticRegression
+from sklearn.multioutput import MultiOutputClassifier
 
 from node_embeddings.model import deepWalk
-from node_embeddings.dataset import BlogCatalogDataset
+from node_embeddings.dataset import PPIDataset
 from node_embeddings.experiments.base import save_figure, init
 
-EXPERIMENT_NAME = 'basic_run'
+EXPERIMENT_NAME = 'multilabel_run'
 EXPERIMENT_OUTPUT_PATH = join('output', EXPERIMENT_NAME)
 
 if __name__ == '__main__':
     init(path=EXPERIMENT_OUTPUT_PATH, seed=1234)
-    bc_dataset = BlogCatalogDataset().load()
+    bc_dataset = PPIDataset().load()
 
     embedding, loss_history = deepWalk(
         graph=bc_dataset['graph'],  
-        walks_per_vertex=1, 
-        walk_length=10, 
+        walks_per_vertex=10, 
+        walk_length=40, 
         window_size=10,  
         embedding_size=128,
         num_neg=5,
@@ -42,7 +43,7 @@ if __name__ == '__main__':
     X = embedding.detach().numpy()
     y = bc_dataset['labels']
 
-    clf = LogisticRegression(random_state=0, multi_class='ovr').fit(X, y)
+    clf = MultiOutputClassifier(estimator= LogisticRegression(random_state=0)).fit(X, y)
     y_hat = clf.predict(X)
     print('Micro F1: ', f1_score(y, y_hat, average='micro'))
     print('Macro F1: ', f1_score(y, y_hat, average='macro'))

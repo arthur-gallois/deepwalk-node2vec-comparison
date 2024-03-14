@@ -27,6 +27,9 @@ To run the experiments, execute from the repository root
 
 ```bash
 python -m node_embeddings.experiments.basic_run
+python -m node_embeddings.experiments.multilabel_run
+python -m node_embeddings.experiments.compare_distributions
+python -m node_embeddings.experiments.split_experiments
 ```
 
 The output images will be written in a folder called `output` under the repository root.

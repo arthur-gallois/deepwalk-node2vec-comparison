@@ -2,6 +2,8 @@ import torch
 import numpy as np
 import random
 
+me = me
+
 def gen_random_walk_tensor(graph, node, length, num_walks):
     walk = torch.zeros((num_walks, length), dtype=int)
     walk[:, 0] = node

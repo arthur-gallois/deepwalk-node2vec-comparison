@@ -17,10 +17,11 @@ pip install -e .
 
 ### Experiments
 
-Download the dataset with
+Download the datasets with
 
 ```bash
 sh download_blogcatalog.sh
+sh download_ppi.sh
 ```
 
 To run the experiments, execute from the repository root
@@ -29,7 +30,7 @@ To run the experiments, execute from the repository root
 python -m node_embeddings.experiments.basic_run
 python -m node_embeddings.experiments.multilabel_run
 python -m node_embeddings.experiments.compare_distributions
-python -m node_embeddings.experiments.split_experiments
+python -m node_embeddings.experiments.split_experiment
 ```
 
 The output images will be written in a folder called `output` under the repository root.

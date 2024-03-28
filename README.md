@@ -30,7 +30,15 @@ To run the experiments, execute from the repository root
 python -m node_embeddings.experiments.basic_run
 python -m node_embeddings.experiments.multilabel_run
 python -m node_embeddings.experiments.compare_distributions
-python -m node_embeddings.experiments.split_experiment
+
+# To reproduce the figures
+python -m node_embeddings.experiments.split_experiment --dataset ppi --algorithm node2vec
+python -m node_embeddings.experiments.split_experiment --dataset ppi --algorithm deepwalk
+python -m node_embeddings.experiments.generate_figures --dataset ppi
+
+python -m node_embeddings.experiments.split_experiment --dataset blogcatalog --algorithm node2vec
+python -m node_embeddings.experiments.split_experiment --dataset blogcatalog --algorithm deepwalk
+python -m node_embeddings.experiments.generate_figures --dataset blogcatalog  
 ```
 
 The output images will be written in a folder called `output` under the repository root.

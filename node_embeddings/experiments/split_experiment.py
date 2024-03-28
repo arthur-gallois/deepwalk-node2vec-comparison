@@ -31,7 +31,7 @@ dataset = args.dataset
 algorithm = args.algorithm
 train = not args.no_train
 
-EXPERIMENT_NAME = f'split_experiment_{dataset}_{algorithm}_longer'
+EXPERIMENT_NAME = f'split_experiment_{dataset}_{algorithm}'
 EXPERIMENT_OUTPUT_PATH = join('output', EXPERIMENT_NAME)
 SEED=1234
 
@@ -83,7 +83,7 @@ if __name__ == '__main__':
             embedding, loss_history = node2vec(
                 graph=bc_dataset['graph'],  
                 walks_per_vertex=10, 
-                walk_length=40, 
+                walk_length=80, 
                 window_size=10,  
                 embedding_size=128,
                 num_neg=5,

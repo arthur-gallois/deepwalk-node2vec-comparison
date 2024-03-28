@@ -21,8 +21,8 @@ def generate_unigram_distribution(graph):
     rw = gen_batch_random_walk(
         graph, 
         initial_nodes=torch.tensor(dataset['graph'].nodes, dtype=int), 
-        length=10, 
-        num_walks=10
+        length=100, 
+        num_walks=100
     )
     _, counts = np.unique(rw, return_counts=True)
     unigram_distribution = torch.tensor(counts) / counts.sum()

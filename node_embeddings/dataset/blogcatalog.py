@@ -1,7 +1,7 @@
 import numpy as np
 import networkx as nx
 from node_embeddings.dataset.dataset import Dataset
-
+from node_embeddings.evaluators import SingleLabelEvaluator
 
 class BlogCatalogDataset(Dataset):
     data_loc = 'data/BlogCatalog3/BlogCatalog-dataset/data/'
@@ -37,3 +37,6 @@ class BlogCatalogDataset(Dataset):
 
         bc_dataset = {'graph': bc, 'labels': labels}
         return bc_dataset
+    
+    def get_evaluator(self):
+        return SingleLabelEvaluator()

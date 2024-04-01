@@ -21,9 +21,8 @@ def deepWalk(graph, walks_per_vertex, walk_length, window_size, embedding_size, 
 
     for _ in range(epochs):
         nodes = torch.tensor(list(graph.nodes), dtype=int)
-        # random_ixs = torch.randperm(nodes.shape[0])
-        # nodes = nodes[random_ixs]
-        random.shuffle(nodes)
+        random_ixs = torch.randperm(nodes.shape[0])
+        nodes = nodes[random_ixs]
         node_loader = generate_batches(nodes, batch_size)
         n_batches = int(number_of_nodes / batch_size)
         for n in tqdm(node_loader, total=n_batches):

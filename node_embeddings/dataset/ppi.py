@@ -4,7 +4,7 @@ import numpy as np
 import networkx as nx
 
 from node_embeddings.dataset.dataset import Dataset
-
+from node_embeddings.evaluators import MultiLabelEvaluator
 
 class PPIDataset(Dataset):
     data_loc = 'data/PPI/Homo_sapiens'
@@ -20,3 +20,6 @@ class PPIDataset(Dataset):
         dataset = {'graph': G, 'labels': y}
 
         return dataset
+    
+    def get_evaluator(self):
+        return MultiLabelEvaluator()

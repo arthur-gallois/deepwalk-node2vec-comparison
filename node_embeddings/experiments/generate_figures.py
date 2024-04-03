@@ -31,18 +31,20 @@ NODE2VEC_OUTPUT_PATH = join('output', NODE2VEC_EXPERIMENT_NAME)
 FINAL_OUTPUT_PATH = 'output'
 
 def get_scores(evaluator, labels, labeled_portions, embedding):
+    NUM_RUNS = 10
     macro_f1_score = np.zeros(len(labeled_portions))
     micro_f1_score = np.zeros(len(labeled_portions))
     for i in range(len(labeled_portions)):
         print('Labeled portion:', labeled_portions[i], end=' ')
-        _, microf1, macrof1 = evaluator.evaluate(embedding, 
-                                    labels.numpy(), 
-                                    labeled_portion=labeled_portions[i])
-        micro_f1_score[i] = microf1
-        macro_f1_score[i] = macrof1
-        print(f'Micro F1: {microf1:.2%}, Macro F1: {macrof1:.2%}')
+        for _ in range(NUM_RUNS):
+            _, microf1, macrof1 = evaluator.evaluate(embedding, 
+                                        labels, 
+                                        labeled_portion=labeled_portions[i])
+            micro_f1_score[i] += microf1
+            macro_f1_score[i] += macrof1
+        print(f'Micro F1: {micro_f1_score[i]/NUM_RUNS:.2%}, Macro F1: {macro_f1_score[i]/NUM_RUNS:.2%}')
     print()
-    return micro_f1_score, macro_f1_score
+    return micro_f1_score/NUM_RUNS, macro_f1_score/NUM_RUNS
 
 def plot(filename, x_values, dw, n2v, title, ylabel):
     plt.figure(figsize=(10, 5))
@@ -56,7 +58,7 @@ def plot(filename, x_values, dw, n2v, title, ylabel):
     plt.grid(True)
 
     for i in range(len(dw)):
-        plt.annotate(f"{dw[i]:.2%}", (x_values[i], dw[i]), textcoords="offset points", xytext=(0,10), ha='center')
+        plt.annotate(f"{dw[i]:.2%}", (x_values[i], dw[i]), textcoords="offset points", xytext=(0,-10), ha='center')
         plt.annotate(f"{n2v[i]:.2%}", (x_values[i], n2v[i]), textcoords="offset points", xytext=(0,10), ha='center')
 
     plt.savefig(join(FINAL_OUTPUT_PATH ,filename))
@@ -82,7 +84,7 @@ if __name__ == '__main__':
                                                 data['labels'], 
                                                 labeled_portions, 
                                                 embedding_node2vec)
-    plot(f'{dataset_name}_micro.png',
+    plot(f'{dataset_name}_micro.svg',
          labeled_portions, 
          micro_score_dw, 
          micro_score_n2v, 
@@ -90,7 +92,7 @@ if __name__ == '__main__':
          'Micro F1(%)'
     )
 
-    plot(f'{dataset_name}_macro.png',
+    plot(f'{dataset_name}_macro.svg',
          labeled_portions, 
          macro_score_dw, 
          macro_score_n2v, 

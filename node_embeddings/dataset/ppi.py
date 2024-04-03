@@ -13,7 +13,7 @@ class PPIDataset(Dataset):
         smat = scipy.io.loadmat(self.data_loc)
         adj_matrix, group = smat["network"], smat["group"]
 
-        y = torch.from_numpy(group.todense()).to(torch.float)
+        y = np.array(group.todense())
 
         G = nx.from_numpy_array(adj_matrix, create_using=nx.DiGraph)   
 

@@ -107,6 +107,6 @@ if __name__ == '__main__':
     for labeled_portion in labeled_portions:
         print('Labeled portion:', labeled_portion, end=' ')
         _, microf1, macrof1 = dataset.get_evaluator().evaluate(embedding, 
-                                    data['labels'].numpy(), 
+                                    data['labels'], 
                                     labeled_portion=labeled_portion)
         print(f'Micro F1: {microf1:.2%} Macro F1: {macrof1:.2%}')

@@ -4,6 +4,8 @@ Authors: Alexandre Maranhão, Alex Pierron and Arthur Gallois
 
 This repository is dedicated to implementing DeepWalk, Node2Vec and comparing their results.
 
+This repository has been developed entirely from scratch, with the exception of the skopt module, which was retrieved from the official [github repository](https://github.com/scikit-optimize/scikit-optimize) and slightly modified to run with the latest version of numpy.
+
 ### Setup 
 
 To setup the environment, install the requirements from `requirements.txt` using the environment manager of your choice. One possibility is with venv, by executing
@@ -31,6 +33,10 @@ sh reproduce_experiments.sh
 ```
 
 The output images will be written in a folder called `output` under the repository root.
+
+### Hyperparameters optimization
+
+To perform hyperparameter optimization, use the notebook `[deepwalk/node2vec]_hyperparameters_optimization.ipynb`. This will output a pickle object containing the Bayesian optimizer and the best parameters found. An example of how to load and use the generated pickle can be found in the notebook `[deepwalk/node2vec]_evaluation.ipynb`.
 
 ### References
 
